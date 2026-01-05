@@ -8,8 +8,8 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<RegisterRequest>({
-    userName: "",
-    fullName: "",
+    loginName: "",
+    memberFullName: "",
     email: "",
     passWord: "",
   });
@@ -101,8 +101,8 @@ const Register: React.FC = () => {
             </label>
             <input
               type="text"
-              name="fullName"
-              value={formData.fullName}
+              name="memberFullName"
+              value={formData.memberFullName}
               onChange={handleChange}
               required
               placeholder="Enter fullname"
@@ -116,8 +116,8 @@ const Register: React.FC = () => {
             </label>
             <input
               type="text"
-              name="userName"
-              value={formData.userName}
+              name="loginName"
+              value={formData.loginName}
               onChange={handleChange}
               required
               placeholder="Enter username"

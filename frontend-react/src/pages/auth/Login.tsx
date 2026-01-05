@@ -11,7 +11,7 @@ const Login: React.FC = () => {
 
     // Controlled inputs
     const [formData, setFormData] = useState<LoginRequest>({
-        userName: "",
+        loginName: "",
         passWord: "",
     });
 
@@ -68,8 +68,8 @@ const Login: React.FC = () => {
                             </label>
                             <input
                                 type="text"
-                                name="userName"
-                                value={formData.userName}
+                                name="loginName"
+                                value={formData.loginName}
                                 onChange={handleChange}
                                 required
                                 placeholder="Enter username"

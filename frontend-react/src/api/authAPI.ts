@@ -1,23 +1,23 @@
 import axios from "axios";
 export interface LoginRequest {
-    userName: string;
+    loginName: string;
     passWord: string;
 }
 export interface RegisterRequest {
-    userName: string;
-    fullName: string;
+    loginName: string;
+    memberFullName: string;
     email: string;
     passWord: string;
 }
 export interface LoginResponse {
     token: string;
     message: string;
-    userName: string;
+    loginName: string;
 }
 
 export const loginAPI = async (body: LoginRequest) => {
     try {
-        const url = `http://localhost:5201/api/auth/login`;
+        const url = `http://localhost:5075/api/auth/login`;
         const response = await axios.post<LoginResponse>(url, body);
         return response.data;
     } catch (error) {
@@ -28,7 +28,7 @@ export const loginAPI = async (body: LoginRequest) => {
 
 export const registerAPI = async (body: RegisterRequest) => {
     try {
-        const url = `http://localhost:5201/api/auth/register`;
+        const url = `http://localhost:5075/api/auth/register`;
         const response = await axios.post<LoginResponse>(url, body);
         return response.data;
     } catch (error) {
