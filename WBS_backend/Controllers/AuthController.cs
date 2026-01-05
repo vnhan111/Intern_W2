@@ -21,5 +21,12 @@ namespace WBS_backend.Controllers
             var result = await _authService.RegisterAsync(registerDto);
             return Ok(result);
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        {
+            var result = await _authService.LoginAsync(loginDto);
+            return Ok(result);
+        }
     }
 }

@@ -14,7 +14,7 @@ export class AuthService {
         dispatch(
           successLogin({
             token: response.token,
-            userName: response.userName,
+            userName: response.loginName,
             message: response.message,
           })
         );
@@ -44,7 +44,7 @@ export class AuthService {
         dispatch(
           successRegister({
             token: response.token,
-            userName: response.userName,
+            userName: response.loginName,
             message: response.message,
           })
         );

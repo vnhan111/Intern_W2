@@ -61,4 +61,34 @@ public class AuthService : IAuthService
             }
         };
     }
+    
+    public async Task<AuthResponseDto> LoginAsync(LoginDto loginDto)
+    {
+        var member = await _context.Members.FirstOrDefaultAsync(m => m.LoginName == loginDto.LoginName);
+        if(member == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, member.Password))
+        {
+            return new AuthResponseDto
+            {
+                Success = false,
+                Message = "Tên đăng nhập hoặc mật khẩu không đúng"
+            };
+        }
+        var token = _jwtService.GenerateToken(member);
+
+        return new AuthResponseDto
+        {
+            Token = token,
+            Success = true,
+            Message = "Đăng nhập thành công",
+            Member = new MemberInfoDto
+            {
+                MemberId = member.MemberId,
+                MemberFullName = member.MemberFullName,
+                Email = member.Email,
+                LoginName = member.LoginName,
+                RoleId = member.RoleId,
+                IsActive = member.IsActive
+            }
+        };
+    }
 }
