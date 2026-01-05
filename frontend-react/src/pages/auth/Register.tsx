@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Eye as EyeIcon, EyeOff as EyeOffIcon } from "lucide-react";
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { AuthService } from "../../service/authService";
 import type { RegisterRequest } from "../../api/authAPI";
+import { Button, Form, Input, Card, message } from 'antd';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -18,7 +19,6 @@ const Register: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [passwordConfirmVisible, setPasswordConfirmVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -27,13 +27,10 @@ const Register: React.FC = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
+  const handleSubmit = async () => {
 
-    // Validate confirm password
     if (formData.passWord !== confirmPassword) {
-      setError("Mật khẩu xác nhận không khớp!");
+      message.error("Confirm password does not match!");
       return;
     }
 
@@ -44,10 +41,10 @@ const Register: React.FC = () => {
     setLoading(false);
 
     if (result.success) {
-      alert("Đăng ký thành công!"); // Hoặc dùng toast nếu có
+      message.success("Registration successful!");
       navigate("/login");
     } else {
-      setError(result.error || "Đăng ký thất bại. Vui lòng thử lại!");
+      message.error(result.error || "Registration failed. Please try again!");
     }
   };
 
@@ -60,31 +57,24 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 mr-[750px] mt-[-20px]">
+    <div className="min-h-screen flex items-center justify-center mr-[750px] mt-[-20px]">
       <img
         src="/Picture1.jpg"
         alt="Background"
-        className="absolute inset-0 w-full h-[105%] object-cover -z-10"
+        className="absolute inset-0 w-full h-[106%]"
       />
-      <div className="w-full max-w-md bg-white rounded-xl shadow-2xl p-8">
+      <Card className="w-full max-w-md bg-white rounded-xl shadow-2xl !bg-gray-200">
         <h2 className="text-3xl font-extrabold text-center text-gray-700 mb-2">
-          Register WBS System
+          Register WBBBSSS System
         </h2>
         <br></br>
 
-        {/* Thông báo lỗi */}
-        {error && (
-          <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg text-center">
-            {error}
-          </div>
-        )}
-
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <Form className="space-y-4" onFinish={handleSubmit}>
           <div className="space-y-1">
-            <label className="flex items-center text-sm font-medium text-gray-700">
+            <Form.Item className="flex items-center text-sm font-medium text-gray-700 mb-[-5px]">
               Email <span className="text-red-600 ml-1">*</span>
-            </label>
-            <input
+            </Form.Item>
+            <Input
               type="email"
               name="email"
               value={formData.email}
@@ -96,27 +86,27 @@ const Register: React.FC = () => {
           </div>
 
           <div className="space-y-1">
-            <label className="flex items-center text-sm font-medium text-gray-700">
+            <Form.Item className="flex items-center text-sm font-medium text-gray-700 mb-[-5px]">
               Full Name <span className="text-red-600 ml-1">*</span>
-            </label>
-            <input
+            </Form.Item>
+            <Input
               type="text"
-              name="memberFullName"
+              name="fullName"
               value={formData.memberFullName}
               onChange={handleChange}
               required
-              placeholder="Enter fullname"
+              placeholder="Enter full name"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
             />
           </div>
 
           <div className="space-y-1">
-            <label className="flex items-center text-sm font-medium text-gray-700">
+            <Form.Item className="flex items-center text-sm font-medium text-gray-700 mb-[-5px]">
               Username <span className="text-red-600 ml-1">*</span>
-            </label>
-            <input
+            </Form.Item>
+            <Input
               type="text"
-              name="loginName"
+              name="userName"
               value={formData.loginName}
               onChange={handleChange}
               required
@@ -126,11 +116,11 @@ const Register: React.FC = () => {
           </div>
 
           <div className="space-y-1">
-            <label className="flex items-center text-sm font-medium text-gray-700">
+            <Form.Item className="flex items-center text-sm font-medium text-gray-700 mb-[-5px]">
               Password <span className="text-red-600 ml-1">*</span>
-            </label>
+            </Form.Item>
             <div className="relative">
-              <input
+              <Input
                 type={passwordVisible ? "text" : "password"}
                 name="passWord"
                 value={formData.passWord}
@@ -146,20 +136,20 @@ const Register: React.FC = () => {
                 className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700 focus:outline-none"
               >
                 {passwordVisible ? (
-                  <EyeIcon className="h-5 w-5" aria-hidden="true" />
+                  <EyeInvisibleOutlined className="h-5 w-5" aria-hidden="true" />
                 ) : (
-                  <EyeOffIcon className="h-5 w-5" aria-hidden="true" />
+                  <EyeOutlined className="h-5 w-5" aria-hidden="true" />
                 )}
               </button>
             </div>
           </div>
 
           <div className="space-y-1">
-            <label className="flex items-center text-sm font-medium text-gray-700">
+            <Form.Item className="flex items-center text-sm font-medium text-gray-700 mb-[-5px]">
               Confirm Password <span className="text-red-600 ml-1">*</span>
-            </label>
+            </Form.Item>
             <div className="relative">
-              <input
+              <Input
                 type={passwordConfirmVisible ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -174,26 +164,26 @@ const Register: React.FC = () => {
                 className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700 focus:outline-none"
               >
                 {passwordConfirmVisible ? (
-                  <EyeIcon className="h-5 w-5" aria-hidden="true" />
+                  <EyeInvisibleOutlined className="h-5 w-5" aria-hidden="true" />
                 ) : (
-                  <EyeOffIcon className="h-5 w-5" aria-hidden="true" />
+                  <EyeOutlined className="h-5 w-5" aria-hidden="true" />
                 )}
               </button>
             </div>
           </div>
 
-          <button
-            type="submit"
+          <Button
+            htmlType="submit"
             disabled={loading}
-            className="w-full bg-green-400 text-white font-semibold py-3 rounded-lg hover:bg-green-500 transition duration-200 shadow-md hover:shadow-lg disabled:bg-green-300 disabled:cursor-not-allowed"
+            className="w-full bg-green-400 text-white font-semibold py-6 rounded-lg hover:!bg-green-500 hover:!text-white transition duration-200 shadow-md hover:shadow-lg disabled:bg-green-300 disabled:cursor-not-allowed"
           >
-            {loading ? "Đang đăng ký..." : "Register"}
-          </button>
-        </form>
+            {loading ? "Registering..." : "Register"}
+          </Button>
+        </Form>
         <br />
-        <hr />
+        <hr className="border-t-2 border-gray-300" />
         <br />
-        <p className="text-center text-gray-600 text-sm mb-8">
+        <p className="text-center text-gray-600 text-sm">
           Already have an account?{" "}
           <Link
             to="/login"
@@ -202,7 +192,7 @@ const Register: React.FC = () => {
             Login
           </Link>
         </p>
-      </div>
+      </Card>
     </div>
   );
 };
