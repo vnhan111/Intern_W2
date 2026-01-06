@@ -1,1 +1,11 @@
-{"Version":1,"Hash":"JFBwgS+v+by4sjJCs/F+ICSKkWWGS9aIpRD6yrIPyZs=","Source":"WBS_backend","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
+{
+  "Version": 1,
+  "Hash": "5fHgeZSXOQNxJmhlEnnWV/HSb4EdjrH7Ut9uCd5mh+Y=",
+  "Source": "WBS_backend",
+  "BasePath": "_content/WBS_backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

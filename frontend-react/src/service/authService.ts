@@ -14,8 +14,9 @@ export class AuthService {
         dispatch(
           successLogin({
             token: response.token,
-            userName: response.loginName,
+            user: response.user,
             message: response.message,
+            success: response.success,
           })
         );
         return { success: true, data: response };
@@ -42,11 +43,9 @@ export class AuthService {
       if (response) {
         console.log("AuthService: Register successful");
         dispatch(
-          successRegister({
-            token: response.token,
-            userName: response.loginName,
-            message: response.message,
-          })
+          successRegister(
+            response
+          )
         );
         return { success: true, data: response };
       } else {

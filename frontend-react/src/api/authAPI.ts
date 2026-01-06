@@ -9,10 +9,20 @@ export interface RegisterRequest {
     email: string;
     passWord: string;
 }
+export interface UserResponse {
+    memberId :string;
+    memberFullName: string;
+    email: string;
+    loginName: string;
+    phoneNumber?: string;
+    roleId: string;
+    isActive: boolean;
+}
 export interface LoginResponse {
     token: string;
     message: string;
-    loginName: string;
+    success: boolean;
+    user: UserResponse;
 }
 
 export const loginAPI = async (body: LoginRequest) => {
@@ -29,7 +39,7 @@ export const loginAPI = async (body: LoginRequest) => {
 export const registerAPI = async (body: RegisterRequest) => {
     try {
         const url = `http://localhost:5075/api/auth/register`;
-        const response = await axios.post<LoginResponse>(url, body);
+        const response = await axios.post<UserResponse>(url, body);
         return response.data;
     } catch (error) {
         console.error("Error registering:", error);
