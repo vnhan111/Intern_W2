@@ -46,3 +46,16 @@ export const registerAPI = async (body: RegisterRequest) => {
         throw error;
     }
 }
+
+export const verifyEmailAPI = async (email: string, code: string) => {
+    try {
+        const url = `http://localhost:5075/api/auth/verify-email`;
+        const response = await axios.get<UserResponse>(url, {
+            params:{email, code}
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error verifying email:", error);
+        throw error;
+    }
+}

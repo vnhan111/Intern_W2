@@ -1,6 +1,7 @@
+import { verifyEmailAPI } from './../api/authAPI';
 import Store from "../store/Store";
 import { loginAPI, registerAPI, type LoginRequest, type RegisterRequest } from "../api/authAPI";
-import { successLogin, failLogin, successRegister, failRegister, logout } from "../redux/slice/authSlice";
+import { successLogin, failLogin, successRegister, failRegister, logout, successVerify, failVerify } from "../redux/slice/authSlice";
 
 const { dispatch } = Store;
 
@@ -61,6 +62,23 @@ export class AuthService {
           ? err.message
           : "Register failed";
       dispatch(failRegister(errorMessage));
+      return { success: false, error: errorMessage };
+    }
+  }
+
+  static async verifyEmail(email: string, code: string){
+    try {
+      console.log("AuthService: Starting verification process");
+
+      const res = await verifyEmailAPI(email, code);
+
+      console.log("AuthService: Verification successful");
+      dispatch(successVerify());
+      return { success: true, data: res };
+    } catch (err: unknown) {
+      console.error("AuthService: Verification error:", err);
+      const errorMessage = err instanceof Error? err.message : "Verification failed";
+      dispatch(failVerify(errorMessage));
       return { success: false, error: errorMessage };
     }
   }

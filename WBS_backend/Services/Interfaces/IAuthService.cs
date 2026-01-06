@@ -6,6 +6,6 @@ public interface IAuthService
 {
     Task<UserResponse> RegisterAsync(RegisterRequest registerRequest);
     Task<AuthResponseDto> LoginAsync(LoginRequest loginRequest);
-    // Task<bool> ActivateMemberAsync(int activated_code);
-    // Task<bool> SendActivationEmailAsync(string email);
+    Task<UserResponse> VerifyEmailAsync(string email, string code);
+    Task SendEmailAsync(string toEmail, string subject, string body);
 }

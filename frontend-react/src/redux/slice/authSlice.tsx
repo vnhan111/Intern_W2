@@ -74,6 +74,18 @@ const authSlice = createSlice({
       state.error = action.payload;
     },
 
+    //success verify
+    successVerify: (state) => {
+      state.error = null;
+      if(state.user){
+        state.user.isActive = true;
+      }
+    },
+
+    failVerify: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
+
     // Logout
     logout: (state) => {
       state.user = null;
@@ -117,6 +129,8 @@ export const {
   failRegister,
   logout,
   clearError,
+  successVerify,
+  failVerify,
   setUser,
   reset,
 } = authSlice.actions;

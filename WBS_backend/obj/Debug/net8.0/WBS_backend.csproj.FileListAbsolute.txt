@@ -378,3 +378,8 @@ E:\Intern_W2\WBS_backend\obj\Debug\net8.0\refint\WBS_backend.dll
 E:\Intern_W2\WBS_backend\obj\Debug\net8.0\WBS_backend.pdb
 E:\Intern_W2\WBS_backend\obj\Debug\net8.0\WBS_backend.genruntimeconfig.cache
 E:\Intern_W2\WBS_backend\obj\Debug\net8.0\ref\WBS_backend.dll
+E:\Intern_W2\WBS_backend\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+E:\Intern_W2\WBS_backend\bin\Debug\net8.0\MailKit.dll
+E:\Intern_W2\WBS_backend\bin\Debug\net8.0\MimeKit.dll
+E:\Intern_W2\WBS_backend\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+E:\Intern_W2\WBS_backend\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
