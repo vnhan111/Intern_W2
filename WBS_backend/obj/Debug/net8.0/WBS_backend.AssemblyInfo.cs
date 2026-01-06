@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WBS_backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+81e433774a5ee00309ac008fcb34242b22059eca")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca1d57d02c931414571503ce9fdceafc5ddbfe72")]
 [assembly: System.Reflection.AssemblyProductAttribute("WBS_backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WBS_backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
