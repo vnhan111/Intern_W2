@@ -1,27 +1,37 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
+export interface UserInfo {
+  memberId: string;
+  memberFullName: string;
+  email: string;
+  loginName: string;
+  phoneNumber?: string;
+  roleId: string;
+  isActive: boolean;
+}
+
 interface AuthState {
-  userName: string | null; 
+  user: UserInfo | null; 
   token: string | null;
   isAuthenticated: boolean;
   error: string | null;
 }
 
-// Helper to load from localStorage
-const loadFromStorage = (): { token: string | null; userName: string | null } => {
+const loadFromStorage = (): { token: string | null; user: UserInfo | null } => {
   try {
     const token = localStorage.getItem("token");
-    const userName = localStorage.getItem("userName");
-    return { token, userName };
+    const saveUser = localStorage.getItem("user");
+    const user = saveUser ? JSON.parse(saveUser) : null;
+    return { token, user };
   } catch (error) {
     console.error("Error loading from localStorage:", error);
-    return { token: null, userName: null };
+    return { token: null, user: null };
   }
 };
 
 const initialState: AuthState = {
+  user: loadFromStorage().user,
   token: loadFromStorage().token,
-  userName: loadFromStorage().userName,
   isAuthenticated: !!loadFromStorage().token,
   error: null,
 };
@@ -31,16 +41,19 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     // Login thành công
-    successLogin: (state, action: PayloadAction<{ token: string; userName: string; message: string }>) => {
-      const { token, userName } = action.payload;
+    successLogin: (state, action: PayloadAction<{ token: string; user?: UserInfo; message: string, success: boolean }>) => {
+      const { token, user } = action.payload;
 
       state.token = token;
-      state.userName = userName;
       state.isAuthenticated = true;
       state.error = null;
 
+      if(user){
+        state.user = user;
+      }
+
       localStorage.setItem("token", token);
-      localStorage.setItem("userName", userName);
+      if (user) localStorage.setItem("user", JSON.stringify(user));
     },
 
     // Login thất bại
@@ -48,22 +61,12 @@ const authSlice = createSlice({
       state.error = action.payload;
       state.isAuthenticated = false;
       state.token = null;
-      state.userName = null;
-      localStorage.removeItem("token");
-      localStorage.removeItem("userName");
     },
 
-    // Register thành công (backend trả cùng dạng LoginResponse → có token + userName)
-    successRegister: (state, action: PayloadAction<{ token: string; userName: string; message: string }>) => {
-      const { token, userName } = action.payload;
-
-      state.token = token;
-      state.userName = userName;
-      state.isAuthenticated = true;
+    // Register thành công
+    successRegister: (state, action: PayloadAction<UserInfo>) => {
+      state.user = action.payload;
       state.error = null;
-
-      localStorage.setItem("token", token);
-      localStorage.setItem("userName", userName);
     },
 
     // Register thất bại
@@ -71,15 +74,27 @@ const authSlice = createSlice({
       state.error = action.payload;
     },
 
+    //success verify
+    successVerify: (state) => {
+      state.error = null;
+      if(state.user){
+        state.user.isActive = true;
+      }
+    },
+
+    failVerify: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
+
     // Logout
     logout: (state) => {
-      state.userName = null;
+      state.user = null;
       state.token = null;
       state.isAuthenticated = false;
       state.error = null;
 
       localStorage.removeItem("token");
-      localStorage.removeItem("userName");
+      localStorage.removeItem("user");
     },
 
     // Xóa error (khi đóng thông báo lỗi)
@@ -87,20 +102,22 @@ const authSlice = createSlice({
       state.error = null;
     },
 
-    // Nếu sau này có API get profile riêng để lấy thông tin user đầy đủ
-    setUser: (state, action: PayloadAction<{ userName: string }>) => {
-      state.userName = action.payload.userName;
-      localStorage.setItem("userName", action.payload.userName);
+    setUser: (state, action: PayloadAction<UserInfo>) => {
+      state.user = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload)); // ✅ Save to localStorage
+      if (action.payload?.loginName) {
+        localStorage.setItem("email", action.payload.loginName);
+      }
     },
 
     // Reset toàn bộ state (nếu cần)
     reset: (state) => {
       state.token = null;
-      state.userName = null;
+      state.user = null;
       state.isAuthenticated = false;
       state.error = null;
       localStorage.removeItem("token");
-      localStorage.removeItem("userName");
+      localStorage.removeItem("user");
     },
   },
 });
@@ -112,6 +129,8 @@ export const {
   failRegister,
   logout,
   clearError,
+  successVerify,
+  failVerify,
   setUser,
   reset,
 } = authSlice.actions;

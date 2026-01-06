@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\workspace\\DEMO_intern\\Intern_W2\\WBS_backend\\WBS_backend.csproj": {}
+    "E:\\Intern_W2\\WBS_backend\\WBS_backend.csproj": {}
   },
   "projects": {
-    "C:\\workspace\\DEMO_intern\\Intern_W2\\WBS_backend\\WBS_backend.csproj": {
+    "E:\\Intern_W2\\WBS_backend\\WBS_backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\workspace\\DEMO_intern\\Intern_W2\\WBS_backend\\WBS_backend.csproj",
+        "projectUniqueName": "E:\\Intern_W2\\WBS_backend\\WBS_backend.csproj",
         "projectName": "WBS_backend",
-        "projectPath": "C:\\workspace\\DEMO_intern\\Intern_W2\\WBS_backend\\WBS_backend.csproj",
-        "packagesPath": "C:\\Users\\03854\\.nuget\\packages\\",
-        "outputPath": "C:\\workspace\\DEMO_intern\\Intern_W2\\WBS_backend\\obj\\",
+        "projectPath": "E:\\Intern_W2\\WBS_backend\\WBS_backend.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "E:\\Intern_W2\\WBS_backend\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\03854\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,8 +37,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "10.0.100"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -53,6 +46,10 @@
             "BCrypt.Net-Next": {
               "target": "Package",
               "version": "[4.0.3, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.14.1, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
@@ -75,6 +72,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.*, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.14.0, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
@@ -104,7 +105,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

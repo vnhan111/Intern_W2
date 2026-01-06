@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\WBS_backend.props" />
+</Project>
