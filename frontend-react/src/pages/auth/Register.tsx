@@ -91,7 +91,7 @@ const Register: React.FC = () => {
             </Form.Item>
             <Input
               type="text"
-              name="fullName"
+              name="memberFullName"
               value={formData.memberFullName}
               onChange={handleChange}
               required
@@ -106,7 +106,7 @@ const Register: React.FC = () => {
             </Form.Item>
             <Input
               type="text"
-              name="userName"
+              name="loginName"
               value={formData.loginName}
               onChange={handleChange}
               required

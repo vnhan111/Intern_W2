@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using WBS_backend.Data;
 using WBS_backend.Entities;
-using WBS_backend.DTOs;
+using WBS_backend.DTOs.Request;
+using WBS_backend.DTOs.Response;
 
 
 
@@ -15,25 +16,21 @@ public class AuthService : IAuthService
         _context = context;
         _jwtService = jwtService;
     }
-    public async Task<AuthResponseDto> RegisterAsync(RegisterDto registerDto)
+    public async Task<UserResponse> RegisterAsync(RegisterRequest registerRequest)
     {
-        var exists = await _context.Members.AnyAsync(m => m.Email == registerDto.Email || m.LoginName == registerDto.LoginName);
+        var exists = await _context.Members.AnyAsync(m => m.Email == registerRequest.Email || m.LoginName == registerRequest.LoginName);
             if(exists)
             {
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "Tài khoản hoặc email đã tồn tại"
-                };
+                throw new InvalidOperationException("Tài khoản hoặc email đã tồn tại");
             }
         var activationCode = Guid.NewGuid().ToString().Substring(0, 6).ToUpper();
 
         var member = new Member
         {
-            MemberFullName = registerDto.MemberFullName,
-            Email = registerDto.Email,
-            LoginName = registerDto.LoginName,
-            Password = BCrypt.Net.BCrypt.HashPassword(registerDto.Password),
+            MemberFullName = registerRequest.MemberFullName,
+            Email = registerRequest.Email,
+            LoginName = registerRequest.LoginName,
+            Password = BCrypt.Net.BCrypt.HashPassword(registerRequest.Password),
             JoinDate = DateTime.UtcNow,
             IsActive = false,
             ActivatedCode = activationCode,
@@ -45,12 +42,7 @@ public class AuthService : IAuthService
 
         var token = _jwtService.GenerateToken(member);
 
-        return new AuthResponseDto
-        {
-            Token = token,
-            Success = true,
-            Message = "Đăng ký thành công",
-            Member = new MemberInfoDto
+        return new UserResponse
             {
                 MemberId = member.MemberId,
                 MemberFullName = member.MemberFullName,
@@ -58,14 +50,13 @@ public class AuthService : IAuthService
                 LoginName = member.LoginName,
                 RoleId = member.RoleId,
                 IsActive = member.IsActive
-            }
         };
     }
     
-    public async Task<AuthResponseDto> LoginAsync(LoginDto loginDto)
+    public async Task<AuthResponseDto> LoginAsync(LoginRequest loginRequest)
     {
-        var member = await _context.Members.FirstOrDefaultAsync(m => m.LoginName == loginDto.LoginName);
-        if(member == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, member.Password))
+        var member = await _context.Members.FirstOrDefaultAsync(m => m.LoginName == loginRequest.LoginName);
+        if(member == null || !BCrypt.Net.BCrypt.Verify(loginRequest.Password, member.Password))
         {
             return new AuthResponseDto
             {
@@ -80,7 +71,7 @@ public class AuthService : IAuthService
             Token = token,
             Success = true,
             Message = "Đăng nhập thành công",
-            Member = new MemberInfoDto
+            Member = new UserResponse
             {
                 MemberId = member.MemberId,
                 MemberFullName = member.MemberFullName,
