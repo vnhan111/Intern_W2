@@ -1,6 +1,8 @@
 # .NET Build Output
 bin/
 obj/
+[Bb]in/
+[Oo]bj/
 
 # Visual Studio / VS Code
 .vs/
